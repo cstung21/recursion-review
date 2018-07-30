@@ -19,40 +19,51 @@ var stringifyJSON = function(obj) {
     if (obj.length === 0) {
       return '[]';
     } else {
-      var arrayStr = '[';
+      var arrayStr = [];
       
       for (var i = 0; i < obj.length; i++) {
-        if (i === obj.length - 1) {
-          arrayStr += (stringifyJSON(obj[i]) + ']');
-        } else {
-          arrayStr += (stringifyJSON(obj[i]) + ',');
-        }
+        arrayStr.push(stringifyJSON(obj[i]));
       }
-      
-      return arrayStr;
+
+      return '[' + arrayStr.join() + ']';
     }    
   }
   
    if (typeof obj === 'object') {
-    var objStr = '{'
-    var objKeys = Object.keys(obj);
     
-    if (objKeys.length === 0) {
+    if (obj.keys === 0) {
       return '{}';
     }
+    var arrayStr = [];
     
-    for (var i = 0; i < objKeys.length; i++) {
-      if (typeof obj[objKeys[i]] === 'function' || obj[objKeys[i]] === undefined) {
-        objStr += '';
-      } else if (i === objKeys.length - 1) {
-        objStr += (stringifyJSON(objKeys[i]) + ':' + (stringifyJSON(obj[objKeys[i]])));
-      } else {
-        objStr += (stringifyJSON(objKeys[i]) + ':' + (stringifyJSON(obj[objKeys[i]]))) + ',';
+    for (var key in obj) {
+      if (typeof obj[key] !== 'function' && obj[key] !== undefined) {
+        arrayStr.push(stringifyJSON(key) + ':' + (stringifyJSON(obj[key])));
       }
     }
-    return objStr + '}'
+    
+    return '{' + arrayStr.join() + '}';
    }
-  
-  
-
+   
 };
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
